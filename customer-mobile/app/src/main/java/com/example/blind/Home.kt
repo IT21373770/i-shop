@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.speech.tts.TextToSpeech
 import android.media.MediaPlayer
-import android.os.Handler
 import android.speech.tts.UtteranceProgressListener
 import java.util.*
 
@@ -28,7 +27,7 @@ class Home : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var tts: TextToSpeech
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var speechRecognitionLauncher: ActivityResultLauncher<Intent>
-
+    private var isSpeechRecognitionInProgress = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
@@ -108,11 +107,54 @@ class Home : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 //                Log.d("SpeechRecognition", "im in the if clause");
 //                 Trigger navigation to activity_main.xml
-               val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+            }else {
+                val text = "Speech recognition failed"
+                val params = Bundle()
+                params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "utteranceId")
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "utteranceId")
+
+                tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {
+                        // Do nothing
+                    }
+
+                    override fun onDone(utteranceId: String?) {
+                        if (utteranceId == "utteranceId") {
+                            startSpeechRecognition()
+                        }
+                    }
+                    @Deprecated("Error")
+                    override fun onError(utteranceId: String?) {
+                        // Handle error if any
+                    }
+                })
+
             }
         } else {
-            Toast.makeText(this, "Speech recognition failed", Toast.LENGTH_SHORT).show()
+            val text = "Speech recognition failed"
+            val params = Bundle()
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "utteranceId")
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "utteranceId")
+
+            tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                override fun onStart(utteranceId: String?) {
+                    // Do nothing
+                }
+
+                override fun onDone(utteranceId: String?) {
+                    if (utteranceId == "utteranceId") {
+                        startSpeechRecognition()
+                    }
+                }
+                @Deprecated("Error")
+                override fun onError(utteranceId: String?) {
+                    // Handle error if any
+                }
+            })
+
+
         }
     }
 
@@ -129,7 +171,7 @@ class Home : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             // Read content of the page
-            val text = "Please select what button would you like to press? First Button, Add Product, Second Button, Go to Navigation, Third Button, Other"
+            val text = "Please select what button would you like to press? First Button, Add Product, Second Button, Go to Navigation, Third Button, Assistance"
             val params = Bundle()
             params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "utteranceId")
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "utteranceId")
@@ -145,6 +187,7 @@ class Home : AppCompatActivity(), TextToSpeech.OnInitListener {
                     }
                 }
 
+                @Deprecated("Deprecated in Java")
                 override fun onError(utteranceId: String?) {
                     // Handle error if any
                 }

@@ -7,40 +7,42 @@
     tools:context=".Home"
     >
 
+
+
     <Button
         android:id="@+id/btn_add_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:text="Add Product"
+        android:layout_width="256dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="140dp"
+        android:text="Product"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_go_to_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="92dp"
+        android:layout_width="256dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="120dp"
         android:text="Go to Navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_add_product" />
 
     <Button
         android:id="@+id/btn_other"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Other"
+        android:layout_width="256dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginBottom="120dp"
+        android:text="Assistance"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_go_to_navigation"
-        app:layout_constraintVertical_bias="0.269" />
+        app:layout_constraintVertical_bias="0.279" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
